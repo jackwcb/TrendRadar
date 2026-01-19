@@ -128,21 +128,26 @@ rss:
 #    • 适用场景：避免重复信息干扰
 # ===============================================================
 report:
-  mode: "current"                     # 可选: daily | current | incremental
-  display_mode: "platform"             # 分组维度: keyword | platform
-                                      # keyword: 按关键词分组显示（默认）
-                                      # platform: 按平台/来源分组显示
+  mode: current                     # 可选: daily | current | incremental，选current表示当前榜单模式
+  display_mode: platform            # 分组维度: keyword | platform，选platform按平台分组展示热点
+                                    # keyword: 按关键词分组显示（默认）
+                                    # platform: 按平台/来源分组显示，更易查看各平台Top5
 
   # 关键词组排序方式（仅 display_mode: keyword 时生效）
   # true: 按 frequency_words.txt 中的定义顺序排列
   # false: 按匹配到的热点条数排序（条数多的在前）
   sort_by_position_first: false
 
-  rank_threshold: 5                   # 排名高亮阈值
+  rank_threshold: 5                   # 排名高亮阈值（排名≤5的热点会高亮，贴合Top5需求）
   max_news_per_keyword: 5             # 每个关键词最大显示数量，设为5即限制单关键词仅显示5条热点
   rank_weight: 0.8                    # 排序权重，设为0.8优先按平台排名排序，确保Top5热点靠前
-  # max_news_per_keyword: 0             # 每个关键词最大显示数量（0=不限制）
-
+# 补充AI配置（避免遗漏导致功能异常）
+ai_analysis:
+  enable: true
+  provider: deepseek                 # 新手优先选deepseek，免费额度充足
+  api_key: ${AI_API_KEY}             # 环境变量注入，不硬编码密钥
+  temperature: 0.7
+  prompt_templates: {}               # 暂留空，后续可按模板补充
 
 # ===============================================================
 # 5. 推送内容控制
